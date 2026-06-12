@@ -1,0 +1,40 @@
+=== Simulación Banco/Caja ===
+Clientes: 8 | Ventanillas: 1 | Modo: FCFS | Semilla: 3
+  Cliente 1: llegada=2  atencion=2
+  Cliente 2: llegada=0  atencion=1
+  Cliente 3: llegada=0  atencion=2  (adulto mayor)
+  Cliente 4: llegada=0  atencion=2  (adulto mayor)
+  Cliente 5: llegada=1  atencion=2  (adulto mayor)
+  Cliente 6: llegada=1  atencion=1
+  Cliente 7: llegada=1  atencion=1  (adulto mayor)
+  Cliente 8: llegada=6  atencion=2
+
+[t=0] Cliente 4 LLEGA y solicita recurso
+[t=0] Cliente 4 INGRESA (recurso ocupado: 1/1)
+[t=0] Cliente 3 LLEGA y solicita recurso (en espera)
+[t=0] Cliente 2 LLEGA y solicita recurso (en espera)
+[t=1] Cliente 5 LLEGA y solicita recurso (en espera)
+[t=1] Cliente 6 LLEGA y solicita recurso (en espera)
+[t=1] Cliente 7 LLEGA y solicita recurso (en espera)
+[t=2] Cliente 1 LLEGA y solicita recurso (en espera)
+[t=2] Cliente 4 SALE (recurso ocupado: 0/1)
+[t=2] Cliente 2 INGRESA (recurso ocupado: 1/1)
+[t=3] Cliente 2 SALE (recurso ocupado: 0/1)
+[t=3] Cliente 3 INGRESA (recurso ocupado: 1/1)
+[t=5] Cliente 3 SALE (recurso ocupado: 0/1)
+[t=5] Cliente 5 INGRESA (recurso ocupado: 1/1)
+[t=6] Cliente 8 LLEGA y solicita recurso (en espera)
+[t=7] Cliente 5 SALE (recurso ocupado: 0/1)
+[t=7] Cliente 6 INGRESA (recurso ocupado: 1/1)
+[t=8] Cliente 6 SALE (recurso ocupado: 0/1)
+[t=8] Cliente 7 INGRESA (recurso ocupado: 1/1)
+[t=9] Cliente 7 SALE (recurso ocupado: 0/1)
+[t=9] Cliente 1 INGRESA (recurso ocupado: 1/1)
+[t=11] Cliente 1 SALE (recurso ocupado: 0/1)
+[t=11] Cliente 8 INGRESA (recurso ocupado: 1/1)
+[t=13] Cliente 8 SALE (recurso ocupado: 0/1)
+
+=== Métricas finales ===
+Tiempo total de simulación: 13.00 s
+Espera promedio: 4.25 s
+Uso del recurso: 99.98%
