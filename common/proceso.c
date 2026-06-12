@@ -83,3 +83,90 @@ void imprimir_tabla(const Proceso procesos[], int n) {
         printf("Promedio %-7s: %.2f\n", "retorno", suma_retorno / n);
     }
 }
+
+int leer_procesos_rr(ProcesoRR procesos[], int max, int con_prioridad) {
+    int n;
+
+    printf("¿Cuántos procesos desea ingresar? ");
+    while (scanf("%d", &n) != 1 || n <= 0 || n > max) {
+        printf("Ingrese un número entre 1 y %d: ", max);
+        while (getchar() != '\n') {
+            /* descarta el resto de la línea inválida */
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        procesos[i].pid = i + 1;
+
+        printf("Proceso P%d - tiempo de llegada (AT): ", procesos[i].pid);
+        scanf("%d", &procesos[i].llegada);
+
+        printf("Proceso P%d - ráfaga de CPU (BT): ", procesos[i].pid);
+        scanf("%d", &procesos[i].rafaga);
+
+        if (con_prioridad) {
+            int prioridad;
+            do {
+                printf("Proceso P%d - prioridad (1=mayor .. 5=menor): ",
+                       procesos[i].pid);
+                if (scanf("%d", &prioridad) != 1) {
+                    prioridad = 0;
+                    while (getchar() != '\n') {
+                        /* descarta el resto de la línea inválida */
+                    }
+                }
+            } while (prioridad < 1 || prioridad > 5);
+            procesos[i].prioridad = prioridad;
+        } else {
+            procesos[i].prioridad = 0;
+        }
+
+        procesos[i].restante = procesos[i].rafaga;
+        procesos[i].inicio = -1;
+        procesos[i].fin = 0;
+        procesos[i].espera = 0;
+        procesos[i].retorno = 0;
+    }
+
+    return n;
+}
+
+void calcular_metricas_rr(ProcesoRR *p) {
+    p->retorno = p->fin - p->llegada;
+    p->espera = p->retorno - p->rafaga;
+}
+
+void imprimir_tabla_rr(const ProcesoRR procesos[], int n, int mostrar_prioridad) {
+    double suma_espera = 0.0;
+    double suma_retorno = 0.0;
+
+    if (mostrar_prioridad) {
+        printf("%3s %3s %3s %4s %6s %3s %6s %7s\n",
+               "PID", "AT", "BT", "Prio", "Inicio", "Fin", "Espera", "Retorno");
+    } else {
+        printf("%3s %3s %3s %6s %3s %6s %7s\n",
+               "PID", "AT", "BT", "Inicio", "Fin", "Espera", "Retorno");
+    }
+
+    for (int i = 0; i < n; i++) {
+        const ProcesoRR *p = &procesos[i];
+
+        if (mostrar_prioridad) {
+            printf("%3d %3d %3d %4d %6d %3d %6d %7d\n",
+                   p->pid, p->llegada, p->rafaga, p->prioridad, p->inicio,
+                   p->fin, p->espera, p->retorno);
+        } else {
+            printf("%3d %3d %3d %6d %3d %6d %7d\n",
+                   p->pid, p->llegada, p->rafaga, p->inicio, p->fin,
+                   p->espera, p->retorno);
+        }
+
+        suma_espera += p->espera;
+        suma_retorno += p->retorno;
+    }
+
+    if (n > 0) {
+        printf("Promedio %-7s: %.2f\n", "espera", suma_espera / n);
+        printf("Promedio %-7s: %.2f\n", "retorno", suma_retorno / n);
+    }
+}
