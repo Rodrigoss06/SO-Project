@@ -1290,13 +1290,13 @@ int main(int argc, char *argv[]) {
 
 ```text
 Modo: sin mutex
-Contador final: 127843 (esperado 400000)
+Contador final: 177000 (esperado 400000)
 
 Modo: sin mutex
-Contador final: 301450 (esperado 400000)
+Contador final: 313465 (esperado 400000)
 
 Modo: sin mutex
-Contador final: 308451 (esperado 400000)
+Contador final: 327705 (esperado 400000)
 ```
 
 [CAPTURA: s3_race_sin_mutex.png]
@@ -1317,7 +1317,7 @@ Contador final: 400000 (esperado 400000)
 [CAPTURA: s3_race_con_mutex.png]
 
 **Análisis:** sin mutex, cada corrida da un resultado **distinto y siempre
-menor** a 400 000 (en nuestras 3 corridas: 127843, 301450, 308451). Esto
+menor** a 400 000 (en nuestras 3 corridas: 177000, 313465, 327705). Esto
 ocurre porque `contador++` se traduce en al menos tres pasos máquina (leer,
 incrementar, escribir) que no son atómicos: dos hilos pueden leer el mismo
 valor antes de que ninguno escriba el resultado incrementado, y uno de los
@@ -2173,7 +2173,7 @@ con *aging* (sección 9.1).
 
 La evidencia de la sección 6.2 es la conclusión más contundente del
 laboratorio: **sin mutex, 3 corridas idénticas del mismo programa dan 3
-resultados distintos y siempre incorrectos** (127843, 301450, 308451 en
+resultados distintos y siempre incorrectos** (177000, 313465, 327705 en
 lugar de 400000), mientras que con mutex las 3 corridas dan exactamente
 400000. Esto demuestra de forma empírica que `contador++` no es atómico y
 que la exclusión mutua no es opcional cuando varios hilos comparten estado
